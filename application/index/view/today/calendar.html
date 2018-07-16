@@ -1,0 +1,54 @@
+<script type="text/javascript">
+    function TodayInfo(start) {  
+        var WEEKLEN = 7, // 一周7天为常量  
+            WEEKDAYS = ["日", "一", "二", "三", "四", "五", "六"],  
+            weekInfo = {"week": null, "day": null}, // 初始化返回信息，默认第null周，星期null  
+            oneDay = 24 * 60 * 60 * 1000, // 一天的毫秒时长  
+            weekLeave, // 开学当天所在周剩余天数  
+            weekStart, // 开学当天start是星期几  
+            today, // 今天  
+            dateDiff, // 今天与开学当天日期差  
+            sDate; //开学之日，日期对象  
+        var rDateStr = /\d{4}[\/-]\d{1,2}[\/-]\d{1,2}/g; // 2018/06/17
+        if (!rDateStr.test(start)) {  
+            alert("后台的时间设置错了,联系作者吧...作者可能为了PHP答辩努力写代码呢");  
+            return weekInfo;  
+        }  
+        sDate = new Date(start.replace("-", "/"));  
+        weekStart = sDate.getDay();  
+        weekStart = weekStart === 0 ? 7 : weekStart; // JS中周日的索引为0，这里转换为7，方便计算  
+          
+        weekLeave = WEEKLEN - weekStart;  
+        today = new Date();  
+        weekInfo.day = WEEKDAYS[today.getDay()];  
+        today = new Date(today.getFullYear() + "/" + (today.getMonth() + 1) + "/" + today.getDate());  
+        dateDiff = today - sDate;  
+        if (dateDiff < 0) {  
+            alert("这绝对是作者傻了...时间设置错.");  
+            return weekInfo;  
+        }  
+        dateDiff = parseInt(dateDiff / oneDay);  
+        weekInfo.week = Math.ceil((dateDiff - weekLeave) / WEEKLEN) + 1;  
+        return weekInfo;  
+    }
+</script>
+	<link rel="stylesheet" href="/public/static/css/dcalendar.picker.css"/>
+    <style type="text/css">
+        a{
+           border-radius:50%;
+        }
+    </style>
+	<table id='mycalendar' class='calendar' style="width: 100%;margin-bottom: 10px;padding-bottom: 10px;text-align: left;"></table>
+	<script type="text/javascript" src="/public/static/js/dcalendar.picker.js"></script>
+	<script type="text/javascript">
+		$('#mycalendar').dcalendar();
+		$(".load").css("width","100%");
+		$('.calendar-date-holder').css("width","100%");
+	    var td = TodayInfo("{:$schoolStarts}");  
+	    $('.calendar-year').css('display','none');
+        $('.calendar-head-card').css({'background-color':'#fff','padding':'5px','padding-left':'10px'});
+        $('.calendar-date-wrapper').css({'font-size':'18px','color':'#000'});
+	    $('.calendar-date').append("<font style='font-size:18px;'>，第 " + td.week + " 周</font>");
+	</script>
+</body>
+</html>

@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <title>Find</title>
+    </head>
+    <body>
+        <div class="alert alert-info" style="padding-left: 10px;text-align: left;margin-top: 10px;">
+             <button type="button" class="close" data-dismiss="alert">×</button>
+             <style type="text/css">
+                 .address{
+                    margin-bottom: 20px;
+                    font-style: normal;
+                    line-height: 1.42857143;
+                    float: left;
+                    padding-left: 8%;
+                    padding-right: 8%;
+                    text-decoration:underline;
+                 }
+                 .clear{
+                    clear: both;
+                    padding-top: 10px;
+                 }
+             </style>
+            <h4>
+                滴滴...
+            </h4> <strong style="padding-left: 20px;font-size: 15px;">根据您检索的关键词:"{:isset($headerStr)?$headerStr:'error'}":</strong>
+            {:isset($bodyStr)?$bodyStr:'error'}
+        </div>
+    </body>
+</html>

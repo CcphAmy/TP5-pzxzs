@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>管理员登录</title>
+	<script src="https://cdn.bootcss.com/jquery/3.3.1/jquery.min.js"></script>
+	<script src="https://cdn.bootcss.com/jquery-cookie/1.4.1/jquery.cookie.js"></script>
+	<link rel="stylesheet" href="https://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css">
+
+	<style type="text/css">
+		body {
+		  padding-top: 20px;
+		  background-color: #eee;
+		  font-family: Helvetica, 'Hiragino Sans GB', 'Microsoft Yahei', '微软雅黑', Arial, sans-serif;
+		}
+		dl dt{
+			padding-top: 10px;
+		}
+		dd{
+			color: #a8a8a8;
+			padding-left: 15px;
+		}
+		img{ pointer-events: none;}
+		.form-signin {
+		  max-width: 330px;
+		  padding: 15px;
+		  margin: 0 auto;
+		}
+		.form-signin .form-signin-heading,
+		.form-signin .checkbox {
+		  margin-bottom: 10px;
+		}
+		.form-signin .checkbox {
+		  font-weight: normal;
+		}
+		.form-signin .form-control {
+		  position: relative;
+		  height: auto;
+		  -webkit-box-sizing: border-box;
+		     -moz-box-sizing: border-box;
+		          box-sizing: border-box;
+		  padding: 10px;
+		  font-size: 16px;
+		}
+		.form-signin .form-control:focus {
+		  z-index: 2;
+		}
+		.form-signin input[type="text"] {
+		  margin-bottom: -1px;
+		  border-bottom-right-radius: 0;
+		  border-bottom-left-radius: 0;
+		}
+		.form-signin input[type="password"] {
+		  margin-bottom: 10px;
+		  border-top-left-radius: 0;
+		  border-top-right-radius: 0;
+		}
+		.outer-container,.content {
+		    width: 300px; height: 100px;
+		}
+		.outer-container {
+		    position: relative;
+		    overflow: hidden;
+		}
+		.inner-container {
+		    position: absolute; left: 0;
+		    overflow-x: hidden;
+		    overflow-y: scroll;
+		}
+
+		 /* for Chrome */
+		.inner-container::-webkit-scrollbar {
+		    display: none;
+		}
+	</style>
+</head>
+<script type="text/javascript">
+	$(document).ready(function(){
+		if ($('#name').val() !=null) 		$('#name').val($.cookie('temp_name'));
+		if ($('#password').val() !=null) 	$('#password').val($.cookie('temp_password'));
+		
+		$('#captchaImg').click(function(){
+			var date = new Date()
+			date = date.setTime(date.getTime()+10*1000);
+			$.cookie('temp_name', $('#name').val(),{expires:date}); 
+			$.cookie('temp_password', $('#password').val(),{expires:date}); 
+			window.location.reload();
+		});
+		$('#submit').click(function(){
+			var date = new Date()
+			date = date.setTime(date.getTime()+10*1000);
+			$.cookie('temp_name', $('#name').val(),{expires:date}); 
+			$.cookie('temp_password', $('#password').val(),{expires:date}); 
+		});
+	});
+
+</script>
+<body>
+	<div class="container">
+		<form action="/admin/admin/login" method="post" class="form-signin">
+			<h2 class="form-signin-heading">番职小助手</h2>
+	        <p style="padding-top:5px;font-size: 14px;color: #a8a8a8;">管理员登录系统,暂时不对外开放.</p>
+	        <input type="text" name="name" id="name" class="username form-control" placeholder="用户名" value="">
+	        <input type="password" name="password" id="password" class="form-control" placeholder="密码" value="">
+			<input type="hidden" name="__token__" value="{$Request.token}">
+	        <button type="submit" name="submit" id="submit" class="btn btn-lg btn-primary btn-block" style="margin-top:20px;">提交</button>
+	    </form>
+
+
+    </div>
+    <script src="https://cdn.bootcss.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+</body>
+</html>

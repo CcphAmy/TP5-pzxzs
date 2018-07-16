@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>Me - 番职小助手</title>
+
+        <script src="https://cdn.bootcss.com/jquery/3.3.1/jquery.min.js"></script>
+        <script src="https://cdn.bootcss.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+        <script src="/public/static/js/pzxzs.token.js"></script>
+
+
+        <link rel="stylesheet" href="https://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css">
+        <style>
+        	body{
+        		background: #f1f1f1;
+                font-family: Helvetica, 'Hiragino Sans GB', 'Microsoft Yahei', '微软雅黑', Arial, sans-serif;
+        	}
+        	table{
+        		background: #fff;
+        	}
+        	.container{
+        		text-align:center;
+        		align-items: center;
+        	}
+        	.img{
+        		margin-top: 50px;
+        		width: 100px;
+        		height: 100px;
+        	}
+            .nav-tabs{
+                text-align: center;
+                height: 40px;
+                line-height: 40px;
+                background: #fff;
+            }
+            .trwidth{
+            	width: 30%;
+                font-weight: bold;
+                text-align:center;
+            }
+            .bottom-tabs{
+        		background: #fff;
+            }
+            .btnImg{
+                width: 32px;
+                height: 32px;
+                margin-top: 10px;
+            }
+            .page-header {
+
+                padding-bottom: 9px;
+                margin: 0px 0 20px;
+                border-bottom: 1px solid #eee;
+
+            }
+            .table-bordered>tbody>tr>td, .table-bordered>tbody>tr>th, .table-bordered>tfoot>tr>td, .table-bordered>tfoot>tr>th, .table-bordered>thead>tr>td, .table-bordered>thead>tr>th {
+                    border: rgba(0,0,0,0); 
+            }
+            .table>tbody>tr{
+                border:1px solid #ddd;
+                text-align: left;
+            }
+        </style>
+
+    </head>
+
+    <body>  
+		<div class="container container-fluid" style="margin-bottom: 50px;">
+			<div class="row-fluid">
+				<div class="span12">
+					<img alt="140x140" src="/public/static/images/infoImg.png" class="img img-circle" />
+					<div class="page-header">
+						<h3>土肥圆</h3><small style="color:#A0A0A0;font-size: 14px;">－ 修复Bug,从你我做起 －</small>
+					</div>
+					<table class="table table-hover table-bordered">
+						<thead>
+							<tr>
+								<th colspan="2">个人信息</th>
+							</tr>
+						</thead>
+						<tbody>
+                            <td colspan="2">信息正在获取中...</td>
+						</tbody>
+					</table>
+                    <button class="btn btn-block btn-large btn-primary" style="margin-bottom: 7px;" type="button" onclick="window.location.href='/index/logout/logout'">切换账号</button>
+                    <button class="btn btn-block btn-large btn-default" style="margin-bottom: 15px;" type="button" onclick="alert('[等我写入数据库再说]')">清除数据</button>
+                    <p style="font-size: 14px;color: #a8a8a8;">-　Tips:数据暂未写入数据库　-</p>
+				</div>
+			</div>
+		</div>
+
+        <div class="main_nav_bottom">
+            <nav class="navbar navbar-default navbar-fixed-bottom"  style="background-color: #fff;">
+                <div class="container" align="center">
+                    <ul class="nav nav-tabs nav-tabs-justified" style="background-color: #fff;">
+                        <div class="row" align="center">
+                            <div class="bottom-tabs col-md-6 col-sm-6 col-xs-6" align="center"><li><a href="/index/today/index.html"><img src="/public/static/images/today.png" class="btnImg" alt="Today"></a></li></div>
+                            <div class="bottom-tabs col-md-6 col-sm-6 col-xs-6" align="center" ><li><a><img src="/public/static/images/onMe.png" class="btnImg" alt="Me"></a></li></div>
+                        </div>
+                    </ul>
+                </div>
+            </nav>
+        </div>
+        <script src="https://cdn.bootcss.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    </body>
+</html>

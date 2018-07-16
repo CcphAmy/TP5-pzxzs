@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>登录 - 番职小助手</title>
+	<script src="https://cdn.bootcss.com/jquery/3.3.1/jquery.min.js"></script>
+	<script src="https://cdn.bootcss.com/jquery-cookie/1.4.1/jquery.cookie.js"></script>
+	<link rel="stylesheet" href="https://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css">
+
+	<style type="text/css">
+		body {
+		  padding-top: 20px;
+		  background-color: #eee;
+		  font-family: Helvetica, 'Hiragino Sans GB', 'Microsoft Yahei', '微软雅黑', Arial, sans-serif;
+		}
+		dl dt{
+			padding-top: 10px;
+		}
+		dd{
+			color: #a8a8a8;
+			padding-left: 15px;
+		}
+		img{ pointer-events: none;}
+		.form-signin {
+		  max-width: 330px;
+		  padding: 15px;
+		  margin: 0 auto;
+		}
+		.form-signin .form-signin-heading,
+		.form-signin .checkbox {
+		  margin-bottom: 10px;
+		}
+		.form-signin .checkbox {
+		  font-weight: normal;
+		}
+		.form-signin .form-control {
+		  position: relative;
+		  height: auto;
+		  -webkit-box-sizing: border-box;
+		     -moz-box-sizing: border-box;
+		          box-sizing: border-box;
+		  padding: 10px;
+		  font-size: 16px;
+		}
+		.form-signin .form-control:focus {
+		  z-index: 2;
+		}
+		.form-signin input[type="text"] {
+		  margin-bottom: -1px;
+		  border-bottom-right-radius: 0;
+		  border-bottom-left-radius: 0;
+		}
+		.form-signin input[type="password"] {
+		  margin-bottom: 10px;
+		  border-top-left-radius: 0;
+		  border-top-right-radius: 0;
+		}
+		.outer-container,.content {
+		    width: 300px; height: 100px;
+		}
+		.outer-container {
+		    position: relative;
+		    overflow: hidden;
+		}
+		.inner-container {
+		    position: absolute; left: 0;
+		    overflow-x: hidden;
+		    overflow-y: scroll;
+		}
+
+		 /* for Chrome */
+		.inner-container::-webkit-scrollbar {
+		    display: none;
+		}
+	</style>
+</head>
+<script type="text/javascript">
+	$(document).ready(function(){
+		if ($('#name').val() !=null) 		$('#name').val($.cookie('temp_name'));
+		if ($('#password').val() !=null) 	$('#password').val($.cookie('temp_password'));
+		
+		$('#captchaImg').click(function(){
+			var date = new Date()
+			date = date.setTime(date.getTime()+10*1000);
+			$.cookie('temp_name', $('#name').val(),{expires:date}); 
+			$.cookie('temp_password', $('#password').val(),{expires:date}); 
+			window.location.reload();
+		});
+		$('#submit').click(function(){
+			var date = new Date()
+			date = date.setTime(date.getTime()+10*1000);
+			$.cookie('temp_name', $('#name').val(),{expires:date}); 
+			$.cookie('temp_password', $('#password').val(),{expires:date}); 
+		});
+	});
+
+</script>
+<body>
+	<div class="container">
+		<form action="/index/login/login" method="post" class="form-signin">
+			<h2 class="form-signin-heading">登录</h2>
+	        <p style="padding-top:5px;font-size: 14px;color: #a8a8a8;">番职小助手正式使用域名 www.pzxzs.cn<br/>账号密码与教务处系统共通.</p>
+	        <input type="text" name="name" id="name" class="username form-control" placeholder="用户名" value="">
+	        <input type="password" name="password" id="password" class="form-control" placeholder="密码" value="">
+	        <div class="captchas">
+	        	<div style="float:left;width: 40%;text-align: center;">
+	        		<input placeholder="验证码" name="captcha" class="form-control"></input>
+	        		<a id="captchaImg">- 换一张,验证码 -</a>
+	        	</div>
+
+	            <img src='{$imgSrc}' name="captchaImg" style="float:right;width: 55%;margin-bottom: 15px;">
+	        </div>
+	        <input type="hidden" name="rz" value="{$rz}">
+	        <input type="hidden" name="lt" value="{$lt}">
+	        <button type="submit" name="submit" id="submit" class="btn btn-lg btn-primary btn-block" style="margin-top:20px;">提交</button>
+	        <dt style="padding-top: 10px">更新日志(可滑动):</dt>
+			 <div class="outer-container">
+			     <div class="inner-container">
+			        <div class="content">
+						<dl contenteditable="false">
+							<dt>2018/6/29</dt>
+							<dd>域名审核成功,正式使用 www.pzxzs.cn.</dd>
+							<dt>2018/6/26</dt>
+							<dd>由于打算存数据库,密码需要解密使用,采用RSA加解密对password字段加密,准备使用jwt做token
+							认证.<br/>研究RSA与JWT TOKEN.</dd>
+							<dt>2018/6/22</dt>
+							<dd>研究一下微信网页,暂时与番职招生公众号桥接.<br/>WechatApi类编写.<br/>进度:模板消息推送与自动回复</dd>
+							<dt>2018/6/21</dt>
+							<dd>正式取名为:番职生活小助手<br/>感谢PHP课程钟老师友情支助的二级域名:<br/><a href="http://sss.mf680.com/">sss.mf680.com</a><br/>同时针对微信进行一波优化.</dd>
+							<dt>2018/6/20</dt>
+							<dd>研究一下token,准备统一规划一下,对整体进行修改<br/>待解决问题:<br/>1.增加token</br>2.增加登录过的账号加入数据库,创建账号密码,同时保存信息.</dd>
+							<dt>2018/6/19</dt>
+							<dd>修复了cookie合并问题,调课接口测试成功,课程接口获取一半.<br/>待解决问题:<br/>n.可能存在服务器响应失败导致错误.</br><br/>Rem:调课接口还有一个数目设置接口,还没写S</dd>
+							<dt>2018/6/18</dt>
+							<dd>整个Today页面的美化与修改.课表接口测试.<br/>待解决问题:<br/>n.课表每次都获取有问题,怀疑是cookie的问题.</br><br/>Rem:貌似需要一个检验登录状态,然后再次重新登录,不需要验证码.</dd>
+							<dt>2018/6/17</dt>
+							<dd>Today页面的完善,增加滴滴找人接口,增加mp3播放器,把不必要的改为ajax请求,增加日历(后期准备改为校历).添加计算当前多少周.<br/>待解决问题:<br/>n.很多功能还没增加.<br/>Rem:校园卡消费接口(未测试),图书馆接口.</dd>
+							<dt>2018/6/16</dt>
+							<dd>Me页面去除身份证号码显示,对Today页面的编写,现有学生数和已获学分的获取.增加滴滴找人<br/>待解决问题:<br/>n.滴滴搜人/图书馆/课表等等</dd>
+							<dt>2018/6/15</dt>
+							<dd>解决现有的BUG,增加验证码,基于bootstrap的Login,Me页面的编写.Login页面增加cookie记住账号密码.添加一个已测试新接口.<br/>待解决问题:<br/>n.问题实在是多.</dd>
+							<dt>2018/6/14</dt>
+							<dd>完善HTTP操作类,解决多层重定向问题,Location和cookie合并问题.<br/>待解决问题:<br/>1.增加验证码.<br/>2.Login界面编写.</dd>
+							<dt>2018/6/13</dt>
+							<dd>分析接口,调试接口,编写HTTP操作类.<br/>待解决问题:<br/>1.不同域名下不同cookie.<br/>2.302多重重定向坑爹问题.</dd>
+							<dt>2018/6/12</dt>
+							<dd>发发楞,研究一下thinkPHP 5.0.</dd>
+						</dl>
+			        </div>
+			     </div>
+			 </div>
+
+	    </form>
+
+
+    </div>
+    <!-- 要不写个日志? -->
+
+
+    <!-- <script src="http://cdn.bootcss.com/jquery/1.11.1/jquery.min.js"></script> -->
+    <script src="https://cdn.bootcss.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+</body>
+</html>

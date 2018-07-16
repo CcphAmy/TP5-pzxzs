@@ -1,0 +1,318 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>Today - 番职小助手</title>
+    <script src="https://cdn.bootcss.com/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://cdn.bootcss.com/jquery-cookie/1.4.1/jquery.cookie.js"></script>
+    <link rel="stylesheet" href="https://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/gsap/1.20.3/TweenMax.min.js"></script><!-- MP3 -->
+    <style>
+    	body{
+    		background: #f1f1f1;
+            font-family: Helvetica, 'Hiragino Sans GB', 'Microsoft Yahei', '微软雅黑', Arial, sans-serif;
+
+    	}
+    	table{
+            margin-top: 10px;
+    		background: #fff;
+    	}
+        strong{
+            color: #000;
+        }
+        .tips{
+            display: flex;
+            padding-left: 10px;
+            color: #707070;
+        }
+        .alert{
+            background-color:#fff;
+            color: #000;
+        }
+    	.container{
+    		text-align:center;
+    		align-items: center;
+    	}
+        .row-top{
+            margin-top:20px;
+        }
+    	.img{
+    		margin-top: 50px; 
+    		width: 140px;
+    		height: 140px;
+    	}
+        .nav-tabs{
+            text-align: center;
+            height: 40px;
+            line-height: 40px;
+            background: #fff;
+        }
+        .alert {
+            text-align:left;
+            padding: 15px;
+            margin-bottom: 12px;
+            border: 1px solid transparent;
+                border-top-color: transparent;
+                border-right-color: transparent;
+                border-bottom-color: transparent;
+                border-left-color: transparent;
+            border-radius: 4px;
+        }
+        .trwidth{
+        	width: 35%;
+            text-align:center;
+        }
+        .bottom-tabs{
+    		background: #fff;
+        }
+        .btnImg{
+            width: 32px;
+            height: 32px;
+            margin-top: 10px;
+        }
+    input[type="text"]  {
+        height: 34px;
+        border: 1px solid #cccccc;
+        border-top-right-radius: 20px; 
+        border-top-left-radius: 20px; 
+        border-bottom-right-radius:20px;
+        border-bottom-left-radius:20px; 
+        padding-left: 15px;
+    }
+    input[type="submit"]  {
+        height: 34px;
+        border-top-right-radius: 8px; 
+        border-top-left-radius: 8px; 
+        border-bottom-right-radius:8px;
+        border-bottom-left-radius:8px; 
+    }
+
+    .table-bordered>tbody>tr>td, .table-bordered>tbody>tr>th, .table-bordered>tfoot>tr>td, .table-bordered>tfoot>tr>th, .table-bordered>thead>tr>td, .table-bordered>thead>tr>th {
+            border: rgba(0,0,0,0); 
+            font-size: 14px;
+    }
+    .table>tbody>tr{
+        text-align: left;
+    }
+
+    </style>
+    <script type="text/javascript">
+        $(document).ready(function(){
+            setTimeout(function(){
+                $('#newTips1').alert('close');
+                $('#newTips2').alert('close');
+            },10000);
+
+            //mp3播放器
+            $('#showMP3').click(function(){
+                $('#alertMP3').css('display','inline');
+                $.get('mp3.html', {}, function (data, textStatus){
+                    $("#mp3").html(data);
+                });
+                $('#newTips1').alert('close');
+            });
+
+            //calendar
+                $.get('/index/today/calendar.html', {}, function (data, textStatus){
+                    $("#calendar").html(data);
+                });
+
+            //滴滴找人
+            $("#find").click(function(){
+                $findText = $('#findText').val();
+                $.get('find', {name:$findText}, function (data, textStatus){
+                    $("#findData").html(data);
+                });
+            });
+
+               //调课 /json 临时
+               //
+            $('#getChangeCourse').click(function(){
+
+                $.ajax({
+                    url:"/index/today/changecourse",
+                    type:"get",
+                    dataType:"json",
+                    // data:{
+                    //     page:page,
+                    //     pageSize:pageSize
+                    // },      // ?page=0&pageSize=2
+                    async:true,
+                    beforeSend:function(){
+                    },
+                    success:function(data){
+
+                        console.log(data);
+                        if (data.count > 2) {
+                            var tempData ="";
+                        
+                            $.each(data.data,function(idx1,item1){
+                                // if(idx==0){ 
+                                //     return true;//同countinue，返回false同break 
+                                // } 
+                                tempData = '<div class="alert"><button type="button" class="close" data-dismiss="alert">×</button>'
+                                $.each(item1,function(idx2,item2){
+                                    tempData = tempData + item2 + '<br/>';
+                                });
+                                tempData = tempData + '</div>';
+                                $('#changeCourse').append(tempData);
+                            });
+                        }//if
+                    },//success
+                    error:function(err){
+                        console.log(err)
+                    }
+                });//ajax
+            });
+               //查成绩 /json 临时
+               //
+            $('#getMark').click(function(){
+
+                $.ajax({
+                    url:"/index/today/mark/year/2017/term/2",
+                    type:"get",
+                    dataType:"json",
+                    // data:{
+                    //     page:page,
+                    //     pageSize:pageSize
+                    // },      // ?page=0&pageSize=2
+                    async:true,
+                    beforeSend:function(){
+                    },
+                    success:function(data){
+
+                        console.log(data);
+                        if (data.count > 2) {
+                            var tempData ="";
+                        
+                            $.each(data.data,function(idx1,item1){
+                                // if(idx==0){ 
+                                //     return true;//同countinue，返回false同break 
+                                // } 
+                                tempData = '<div class="alert"><button type="button" class="close" data-dismiss="alert">×</button>'
+                                $.each(item1,function(idx2,item2){
+                                    tempData = tempData + item2 + '<br/>';
+                                });
+                                tempData = tempData + '</div>';
+                                $('#mark').append(tempData);
+                            });
+                        }//if
+                    },//success
+                    error:function(err){
+                        console.log(err)
+                    }
+                });//ajax
+            });
+
+        });
+    </script>
+    </head>
+
+    <body>  
+		<div class="container container-fluid" style="margin-bottom: 50px;">
+			<div class="row-fluid row-top">
+				<div class="span12">
+                    <!-- mp3 -->
+                    <div class="alert" id="alertMP3" style="background-color: rgba(0,0,0,0);display: none;">
+                        <button type="button" class="close" data-dismiss="alert">×</button>
+                        <div id="mp3" style="margin-top: 150px;margin-bottom: -25px;"></div>
+                    </div>
+                    
+
+                    <!-- 通知 -->
+                    <div class="alert" id="newTips1">
+                         <button type="button" class="close" data-dismiss="alert">×</button>
+                        <h4>
+                            MP3播放器
+                        </h4> <span class="tips"><strong>整改: </strong>旧MP3播放器与新风格不符合. <a id="showMP3">依旧显示</a></span>
+                    </div>
+
+                    <div class="alert" id="newTips2">
+                         <button type="button" class="close" data-dismiss="alert">×</button>
+                        <h4>
+                            通知!
+                        </h4> <span class="tips"><strong>管理员: </strong>校园诈繁频繁出现,同学们请注意.</span>
+                    </div>
+
+                    <!-- 滴滴搜人 -->
+                    <div class="alert">
+                         <button type="button" class="close" data-dismiss="alert">×</button>
+                        <h4>
+                            滴滴...
+                        </h4><span class="tips">现支持<strong>姓名/学号/职业/归属部门等</strong>模糊查询.</span>
+                        <input class="input-medium search-query" id="findText" name="findText" type="text" class="form-control" style="width:167px;margin:10px;"  placeholder="姓名,学号,办公室" /> 
+                        <button id="find" name="find" class="btn btn-default" style="width: 85px">搜索</button>
+                    </div>
+                    <div id="findData"></div>
+
+                    <!-- 日历区域 -->
+                    <div class="alert">
+                        <button type="button" class="close" data-dismiss="alert">×</button>
+                        <div id="calendar"></div>
+                    </div>
+
+                    <!-- Today 课程 -->
+                    <div class="alert">
+                         <button type="button" class="close" data-dismiss="alert">×</button>
+                        <h4>
+                            Today 课程
+                        </h4> <span class="tips">调课计划 以及 课表还在制作,<a onclick="window.location.href='/index/today/course/year/2017/term/2';">查询当前进度</a>.</span>
+                    </div>
+                    <!-- 学霸成绩 -->
+                    <div class="alert">
+                         <button type="button" class="close" data-dismiss="alert">×</button>
+                        <h4>
+                            一键查成绩
+                        </h4> <span class="tips">一键查成绩接口调试阶段,<a id='getMark'>查询当前进度</a>.</span>
+                    </div>
+                    <div id="mark"></div>
+                    <!-- 调课 -->
+                    <div class="alert">
+                         <button type="button" class="close" data-dismiss="alert">×</button>
+                        <h4>
+                            调课
+                        </h4>
+                        <a id="getChangeCourse">获取</a>
+                        <span class="tips" >暂时为调试状态.</span>
+                    </div>
+                    <div id="changeCourse"></div>
+                    <!-- 信息中心 -->
+                    <div class="alert">
+                        <button type="button" class="close" data-dismiss="alert">×</button>
+                        <h4>信息中心<span class="tips" style="font-size: 12px;">数据仅供参考</span></h4>
+                        <table class="table" style="margin-top: 20px;">
+                            <tbody>
+                                {:empty($tableTrTd)?'<td class="trwidth">ERROR</td><td>获取错误</td>':$tableTrTd;}
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <!-- 功能 -->
+                    <div class="alert">
+                         <button type="button" class="close" data-dismiss="alert">×</button>
+                        <h4>
+                            功能
+                        </h4> <span class="tips">计划可行性:增加全部课表查询,调课通知,成绩查询,图书馆查询.<br/>计划待定性:校园卡查询处于内网,待定.</span>
+                    </div>
+                    <p style="font-size: 14px;color: #a8a8a8;">- 这个是底线 -</p>
+				</div>
+			</div>
+		</div>
+
+        <div class="main_nav_bottom">
+            <nav class="navbar navbar-default navbar-fixed-bottom"  style="background-color: #fff;">
+                <div class="container" align="center">
+                    <ul class="nav nav-tabs nav-tabs-justified" style="background-color: #fff;">
+                        <div class="row" align="center">
+                            <div class="bottom-tabs col-md-6 col-sm-6 col-xs-6" align="center"><li><a><img src="/public/static/images/onToday.png" class="btnImg" alt="Today"></a></li></div>
+                            <div class="bottom-tabs col-md-6 col-sm-6 col-xs-6" align="center"><li><a href="/index/index/index.html"><img src="/public/static/images/me.png" class="btnImg" alt="Me"></a></li></div>
+                        </div>
+                    </ul>
+                </div>
+            </nav>
+        </div>
+        <script src="https://cdn.bootcss.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    </body>
+</html>
