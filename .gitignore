@@ -2,3 +2,5 @@
 composer.lock
 *.log
 thinkphp
+/application/extra/WechatApi.php
+/application/index/controller/Tui.php
