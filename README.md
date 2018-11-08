@@ -2,7 +2,7 @@
 
 基于TP5的番职小助手.
 
-![pzxzs.cn 番职小助手(调试版本)](www.pzxzs.cn)
+[pzxzs.cn 番职小助手(调试版本)](www.pzxzs.cn)
 
 (广州番禺职业技术学院)功能:
 
